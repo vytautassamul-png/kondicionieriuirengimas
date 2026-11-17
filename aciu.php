@@ -1,0 +1,10 @@
+<?php
+declare(strict_types=1);
+require __DIR__ . '/lib/bootstrap.php';
+start_site_session('ki_lead_session');
+$realSuccess = isset($_SESSION['lead_sent']) && time() - (int) $_SESSION['lead_sent'] < 300;
+unset($_SESSION['lead_sent']);
+$c=site_content();
+header('Cache-Control: no-store');
+?>
+<!doctype html><html lang="lt"><head><?= gtm_head_snippet() ?><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,follow"><title>Ačiū už užklausą | <?= h($c['site_name']) ?></title><link rel="stylesheet" href="assets/style.css"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><?php if ($realSuccess): ?><script>window.dataLayer=window.dataLayer||[];window.dataLayer.push({event:'generate_lead',lead_type:'contact_form'});</script><?php endif; ?></head><body><?= gtm_body_snippet() ?><div class="topbar"><div class="container topbar-inner"><?= h($c['site_name']) ?></div></div><header class="site-header"><div class="container nav-wrap"><a class="brand" href="/"><span class="brand-icon">❄</span><span class="brand-text">KONDICIONIERIŲ<br><strong>ĮRENGIMAS.LT</strong></span></a></div></header><main class="section"><div class="container" style="max-width:650px;text-align:center;min-height:40vh"><div style="font-size:58px;color:#00a9bc">✓</div><h1 style="font-size:42px;letter-spacing:-1.5px">Ačiū! <?= $realSuccess?'Užklausa išsiųsta.':'Susisiekime!' ?></h1><p style="color:#718692;line-height:1.8"><?= $realSuccess?'Gavome jūsų užklausą. Susisieksime nurodytais kontaktais dėl pasiūlymo ir montavimo detalių.':'Užklausą galite pateikti per kontaktų formą pagrindiniame puslapyje.' ?></p><a href="/" class="btn btn-primary" style="margin-top:20px">Grįžti į pradžią ↗</a></div></main><footer class="footer"><div class="container footer-bottom"><span>© <?= h($c['site_name']) ?></span></div></footer></body></html>
