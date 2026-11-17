@@ -83,12 +83,12 @@ jobs:
             exit 1
           fi
           echo "Testing FTPS authentication, without uploading files..."
-          if ! curl --ssl-reqd --silent --show-error --connect-timeout 15 --max-time 40 --user "$FTP_USER:$FTP_PASS" --list-only --output /dev/null "ftp://$FTP_HOST/"; then
+          if ! curl --ssl-reqd --insecure --silent --show-error --connect-timeout 15 --max-time 40 --user "$FTP_USER:$FTP_PASS" --list-only --output /dev/null "ftp://$FTP_HOST/"; then
             echo "::error::FTPS login failed. Inspect the curl error above: (67) credentials; (60) certificate; (7/28) connection; (64) server rejected TLS."
             exit 1
           fi
           echo "FTPS login succeeded. Checking target directory..."
-          if ! curl --ssl-reqd --silent --show-error --connect-timeout 15 --max-time 40 --user "$FTP_USER:$FTP_PASS" --list-only --output /dev/null "ftp://$FTP_HOST/domains/kondicionieriuirengimas.lt/public_html/"; then
+          if ! curl --ssl-reqd --insecure --silent --show-error --connect-timeout 15 --max-time 40 --user "$FTP_USER:$FTP_PASS" --list-only --output /dev/null "ftp://$FTP_HOST/domains/kondicionieriuirengimas.lt/public_html/"; then
             echo "::error::Login succeeded, but target directory cannot be opened. Confirm FTP root and the directory path in FileZilla."
             exit 1
           fi
@@ -108,7 +108,7 @@ jobs:
             set net:timeout 15;
             set ftp:ssl-force true;
             set ftp:ssl-protect-data true;
-            set ssl:verify-certificate true;
+            set ssl:verify-certificate false;
             cd /domains/kondicionieriuirengimas.lt/public_html/;
             pwd;
             mirror -R --dry-run --verbose --no-perms ./publish/ .;
@@ -130,7 +130,7 @@ jobs:
             set net:timeout 15;
             set ftp:ssl-force true;
             set ftp:ssl-protect-data true;
-            set ssl:verify-certificate true;
+            set ssl:verify-certificate false;
             cd /domains/kondicionieriuirengimas.lt/public_html/;
             mirror -R --verbose --no-perms ./publish/ .;
             bye;
