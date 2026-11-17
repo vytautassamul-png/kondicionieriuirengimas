@@ -43,6 +43,33 @@ jobs:
           sudo apt-get update -qq
           sudo apt-get install -y -qq lftp
 
+      - name: Verify FTP hostname and port 21 (no credentials sent)
+        shell: bash
+        env:
+          FTP_HOST: ${{ secrets.FTP_SERVER }}
+        run: |
+          set -euo pipefail
+          if [[ -z "$FTP_HOST" ]]; then
+            echo "::error::Missing FTP_SERVER secret"
+            exit 1
+          fi
+          if [[ "$FTP_HOST" == *://* || "$FTP_HOST" == */* || "$FTP_HOST" == *:* ]]; then
+            echo "::error::FTP_SERVER must contain only the FTP host (example: ftp.example.lt), without ftp://, slash or port"
+            exit 1
+          fi
+          echo "Checking FTP_SERVER DNS (secret value hidden)..."
+          if ! getent ahostsv4 "$FTP_HOST" >/dev/null; then
+            echo "::error::FTP_SERVER hostname cannot be resolved. Compare it with FileZilla Quickconnect Host."
+            exit 1
+          fi
+          echo "DNS lookup succeeded."
+          echo "Checking FTP TCP port 21..."
+          if ! timeout 15 bash -c 'exec 3<>/dev/tcp/$1/21' _ "$FTP_HOST"; then
+            echo "::error::Cannot connect to port 21. Check actual FileZilla server address, firewall and FTP port."
+            exit 1
+          fi
+          echo "Port 21 is reachable."
+
       - name: Check FTPS destination and preview upload (no changes)
         shell: bash
         env:
@@ -54,8 +81,8 @@ jobs:
           test -n "$FTP_HOST" && test -n "$FTP_USER" && test -n "$FTP_PASS"
           lftp -u "$FTP_USER","$FTP_PASS" -e "
             set cmd:fail-exit true;
-            set net:max-retries 2;
-            set net:timeout 20;
+            set net:max-retries 1;
+            set net:timeout 15;
             set ftp:ssl-force true;
             set ftp:ssl-protect-data true;
             set ssl:verify-certificate true;
@@ -76,8 +103,8 @@ jobs:
           set -euo pipefail
           lftp -u "$FTP_USER","$FTP_PASS" -e "
             set cmd:fail-exit true;
-            set net:max-retries 2;
-            set net:timeout 20;
+            set net:max-retries 1;
+            set net:timeout 15;
             set ftp:ssl-force true;
             set ftp:ssl-protect-data true;
             set ssl:verify-certificate true;
