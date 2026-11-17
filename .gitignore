@@ -1,0 +1,16 @@
+# Private production configuration and user data
+/private/
+/uploads/
+/.env
+/.env.*
+ADMIN_PRISIJUNGIMAS.txt
+*.bak
+*.log
+
+# Keep Let's Encrypt and server-specific rules on production
+/.htaccess
+/.well-known/
+
+# Deployment staging
+/publish/
+/dist/
