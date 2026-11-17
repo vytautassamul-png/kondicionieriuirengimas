@@ -1,0 +1,103 @@
+/* 2026-11 seasonal redesign — additive layer, preserves existing layout and API. */
+:root{--season-blue:#075bd6;--season-cyan:#08a8d0;--season-navy:#0b1834;--season-muted:#50637b;--season-line:#dbe7f1}
+html{scroll-padding-top:85px}section[id], .contact-form-wrap[id]{scroll-margin-top:85px}
+/* Keep desktop and mobile navigation in view while scrolling. */
+.site-header.match-header{position:sticky;top:0;z-index:200;background:#fff;box-shadow:0 3px 18px rgba(11,30,61,.10);isolation:isolate}
+.match-header .match-nav{background:#fff}
+.match-nav-cta{background:linear-gradient(110deg,#0969ee,#064dbd)}
+.match-hero{height:auto;min-height:470px}
+.match-hero-inner{height:auto;min-height:470px;padding-top:24px;padding-bottom:24px}
+.match-hero-copy{max-width:530px}
+.match-hero h1{font-size:clamp(36px,3.35vw,53px);letter-spacing:-1.5px;max-width:545px}
+.match-hero-copy>p{font-size:16px;line-height:1.52;margin-bottom:18px}
+.winter-pill{display:inline-flex;align-items:center;gap:9px;margin-bottom:18px;padding:8px 15px;background:rgba(255,255,255,.92);border:1px solid #b7d6ec;border-radius:100px;color:#0b4c96;font-size:12px;font-weight:750;box-shadow:0 2px 13px #0b498012}
+.winter-pill>span:first-child{color:#0a91d4;font-size:17px}.winter-pill .pill-divider{color:#6d95b4}
+.match-advantages{margin-top:0}
+/* Shared structure for additional human-written landing-page sections. */
+.winter-section,.work-section,.packages-section,.winter-faq-section{padding:70px 0;color:var(--season-navy)}
+.winter-section{background:linear-gradient(180deg,#edf6fc 0%,#fff 100%)}
+.work-section{background:#fff}
+.packages-section{background:#f2f7fc}
+.winter-faq-section{background:#fff}
+.winter-head{max-width:950px;margin-bottom:27px}
+.winter-eyebrow{display:block;font-size:12px;letter-spacing:1.6px;font-weight:850;color:#006bc7;margin-bottom:12px}
+.winter-head h2,.winter-faq-wrap h2{font-size:clamp(29px,3vw,42px);line-height:1.14;letter-spacing:-1.2px;margin:0 0 17px;font-weight:840}
+.winter-head>p,.winter-faq-wrap>div:first-child>p{font-size:16px;line-height:1.8;color:#455b71;margin:0;max-width:940px}
+.winter-system-grid,.packages-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.winter-system-card,.package-card{border:1px solid #d8e6f2;border-radius:18px;background:#fff;padding:28px;box-shadow:0 12px 35px #092c5810;display:flex;flex-direction:column;align-items:flex-start}
+.winter-system-card h3,.package-card h3{font-size:22px;letter-spacing:-.5px;margin:14px 0 12px;color:#0b2444}
+.winter-system-card p,.package-card p{font-size:14px;line-height:1.78;color:#4b6178;margin:0 0 20px}
+.winter-system-card a,.package-card a{margin-top:auto;font-size:13px;font-weight:800;color:#075ac2;text-decoration:none}
+.winter-system-card a:hover,.package-card a:hover{text-decoration:underline}
+.winter-symbol{height:51px;width:51px;border-radius:13px;background:#e3f3ff;color:#0069bf;display:grid;place-items:center;font-size:30px;font-weight:600}
+.work-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}
+.work-tile{position:relative;border:1px solid #dce5f0;border-radius:14px;padding:24px 20px 22px;background:#f9fcff;min-height:192px}
+.work-number{display:block;color:#0b80c8;font-weight:850;font-size:12px;letter-spacing:1.1px;margin-bottom:15px}
+.work-tile h3{font-size:17px;line-height:1.3;margin:0 0 10px;letter-spacing:-.35px}
+.work-tile p{font-size:13px;line-height:1.66;color:#4c6178;margin:0}
+.work-bottom{margin-top:25px;padding:20px 25px;border-radius:14px;background:#eaf5ff;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.work-bottom p{margin:0;max-width:790px;font-size:14px;line-height:1.6;color:#36536a}
+.work-bottom .btn{min-width:200px;white-space:nowrap;background:linear-gradient(120deg,#086fe9,#0051bc)}
+.package-card{min-height:315px}
+.package-card.popular{border:2px solid #097ad6;box-shadow:0 18px 36px #075bc21c}
+.package-no{color:#0b80c8;font-weight:800;letter-spacing:2px;font-size:12px}
+.package-detail{background:#edf6fc;padding:12px 14px;border-radius:9px;font-size:12px;line-height:1.5;color:#385870;font-weight:750;margin-top:auto;margin-bottom:22px;width:100%}
+.package-card a{margin-top:0}
+.package-disclaimer{margin-top:17px;color:#556c84;font-size:12px;line-height:1.7}
+.winter-faq-wrap{display:grid;grid-template-columns:.8fr 1.2fr;gap:65px;align-items:start}
+.winter-faq-list details{border:1px solid #d7e5ef;border-radius:11px;margin-bottom:12px;background:#fff;overflow:hidden}
+.winter-faq-list summary{padding:17px 20px;cursor:pointer;font-weight:760;color:#15304f;font-size:15px}
+.winter-faq-list details[open] summary{background:#f5faff}
+.winter-faq-list details p{font-size:14px;line-height:1.75;color:#52667c;margin:0;padding:2px 20px 20px}
+/* Sticky mobile call bar: phone number, smartphone glyph, high-contrast blue. */
+@media(max-width:900px){
+  .site-header.match-header{position:sticky;top:0}
+  .mobile-bottom{z-index:350;grid-template-columns:1fr 1fr;gap:9px;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:#fff}
+  .mobile-bottom .mobile-phone-button{background:#0759d6!important;color:#fff!important;border-radius:10px;display:flex;gap:7px;align-items:center;justify-content:center;min-width:0;padding:11px 7px;box-shadow:0 2px 10px #0759d638;font-size:clamp(11px,2.75vw,15px);font-weight:850;line-height:1.15}
+  .mobile-phone-button svg{width:20px;height:20px;flex-shrink:0}
+  .mobile-bottom .mobile-offer-button{background:#009fc1!important;color:white!important;border-radius:10px;display:flex;align-items:center;justify-content:center;gap:6px;min-width:0;padding:11px 5px;font-size:clamp(11px,2.9vw,15px);box-shadow:0 2px 10px #0099bc35}
+  .mobile-offer-button span{font-size:17px}
+  .match-hero{min-height:0}
+  .match-hero-inner{min-height:0}
+  .winter-system-grid,.packages-grid{grid-template-columns:1fr 1fr}
+  .work-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .winter-faq-wrap{grid-template-columns:1fr;gap:23px}
+}
+@media(max-width:650px){
+  html{scroll-padding-top:78px}
+  .match-hero-inner{padding-block:28px;display:grid;grid-template-columns:1fr}
+  .match-hero h1{font-size:clamp(32px,8.7vw,43px);line-height:1.08}
+  .match-hero-copy>p{font-size:15px;line-height:1.63}
+  .winter-pill{font-size:11px;margin-bottom:20px}
+  .winter-section,.work-section,.packages-section,.winter-faq-section{padding:46px 0}
+  .winter-head h2,.winter-faq-wrap h2{font-size:29px}
+  .winter-head>p,.winter-faq-wrap>div:first-child>p{font-size:14px;line-height:1.74}
+  .winter-system-grid,.packages-grid{grid-template-columns:1fr;gap:12px}
+  .winter-system-card,.package-card{padding:22px;min-height:auto}
+  .work-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .work-tile{min-height:0;padding:18px 14px}
+  .work-tile h3{font-size:14px}
+  .work-tile p{font-size:12px}
+  .work-bottom{flex-direction:column;align-items:stretch;padding:19px}
+  .work-bottom .btn{min-width:0}
+  .mobile-bottom .mobile-phone-button{font-size:clamp(11px,3.1vw,14px)}
+}
+@media(max-width:355px){.mobile-bottom{gap:6px;padding-inline:7px}.mobile-phone-button svg{width:15px;height:15px}.mobile-bottom .mobile-phone-button{font-size:11px}.mobile-bottom .mobile-offer-button{font-size:11px}}
+
+/* 2026-11-17: Vienodas logotipas viršuje ir apačioje, lengvai įskaitomas tamsiame fone. */
+.footer .match-brand{display:inline-flex;align-items:center;gap:12px;color:#fff;text-decoration:none;max-width:100%;}
+.footer .match-brand strong{display:block;font-size:20px;letter-spacing:-.7px;line-height:1.08;font-weight:800;color:#fff;margin:0;}
+.footer .match-brand small{display:block;font-size:11px;line-height:1.35;color:#c0d5e5;margin-top:4px;}
+.footer .match-snow{display:block;font-size:43px;line-height:1;color:#0462c9;font-family:Arial,sans-serif;flex:none;}
+.footer-main .footer-brand+p{color:#b2c7d6;max-width:360px;line-height:1.65;}
+@media(max-width:1100px){.footer .match-brand strong{font-size:16px}.footer .match-snow{font-size:32px}}
+@media(max-width:650px){.footer .match-brand strong{font-size:17px}.footer .match-brand small{font-size:10px}}
+
+/* 2026-11-17: nationwide lead capture and service-area list. */
+.nationwide-city-list{display:flex;flex-wrap:wrap;gap:10px;list-style:none;margin:24px 0;padding:0}
+.nationwide-city-list li{background:#eff7ff;border:1px solid #d2e5f8;border-radius:999px;padding:9px 16px;color:#154e8b;font-weight:720;font-size:13px}
+.editorial-local .nationwide-disclaimer{font-size:13px;color:#50657d;margin:0 0 22px}
+.match-form-card form>label[for="city"]:before{content:"⌖";font-size:23px}
+.match-form-card form>label[for="city"]>input{padding-left:38px}
+@media(min-width:651px){.match-hero{min-height:505px}.match-hero-inner{min-height:505px}}
+@media(max-width:650px){.nationwide-city-list{gap:7px}.nationwide-city-list li{font-size:12px;padding:8px 12px}}
