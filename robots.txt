@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /private/
+Disallow: /lib/
+Sitemap: https://kondicionieriuirengimas.lt/sitemap.xml
