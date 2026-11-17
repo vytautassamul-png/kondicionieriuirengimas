@@ -70,6 +70,29 @@ jobs:
           fi
           echo "Port 21 is reachable."
 
+      - name: Diagnose secure FTP login and target folder (no file changes)
+        shell: bash
+        env:
+          FTP_HOST: ${{ secrets.FTP_SERVER }}
+          FTP_USER: ${{ secrets.FTP_USERNAME }}
+          FTP_PASS: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          set -euo pipefail
+          if [[ -z "$FTP_USER" || -z "$FTP_PASS" ]]; then
+            echo "::error::FTP_USERNAME or FTP_PASSWORD secret is empty or missing."
+            exit 1
+          fi
+          echo "Testing FTPS authentication, without uploading files..."
+          if ! curl --ssl-reqd --silent --show-error --connect-timeout 15 --max-time 40 --user "$FTP_USER:$FTP_PASS" --list-only --output /dev/null "ftp://$FTP_HOST/"; then
+            echo "::error::FTPS login failed. Inspect the curl error above: (67) credentials; (60) certificate; (7/28) connection; (64) server rejected TLS."
+            exit 1
+          fi
+          echo "FTPS login succeeded. Checking target directory..."
+          if ! curl --ssl-reqd --silent --show-error --connect-timeout 15 --max-time 40 --user "$FTP_USER:$FTP_PASS" --list-only --output /dev/null "ftp://$FTP_HOST/domains/kondicionieriuirengimas.lt/public_html/"; then
+            echo "::error::Login succeeded, but target directory cannot be opened. Confirm FTP root and the directory path in FileZilla."
+            exit 1
+          fi
+          echo "FTPS login and target directory verified; no files were changed."
       - name: Check FTPS destination and preview upload (no changes)
         shell: bash
         env:
